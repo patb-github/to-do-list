@@ -1,11 +1,11 @@
 import { Button, Flex, TextInput } from '@mantine/core';
 import React from 'react';
 type Props = {
-    newTask: string,
+    task: string,
     setNewTask: React.Dispatch<React.SetStateAction<string>>
 }
 
-function AddTask({newTask, setNewTask}: Props) {
+function InactiveTask({task, settask}: Props) {
   return (
     <Flex
         mih={50}
@@ -16,8 +16,8 @@ function AddTask({newTask, setNewTask}: Props) {
         wrap="wrap"
       >
         <TextInput
-            value={newTask}
-            onChange={(event) => setNewTask(event.currentTarget.value)}
+            value={task}
+            onChange={(event) => settask(event.currentTarget.value)}
             placeholder='Add a task'
         />
         <Button variant="filled">Add</Button>
@@ -25,4 +25,4 @@ function AddTask({newTask, setNewTask}: Props) {
   )
 }
 
-export default AddTask
+export default InactiveTask

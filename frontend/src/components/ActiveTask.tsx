@@ -1,18 +1,20 @@
-import React from 'react'
 import { Checkbox } from '@mantine/core';
+import { useState } from 'react';
 
 type Props = {
-    checked: boolean,
-    setChecked: React.Dispatch<React.SetStateAction<boolean>>,
     task: string,
 }
 
-function ActiveTask({checked, setChecked, task}: Props) {
+function ActiveTask({task}: Props) {
+
+  const [checked, setChecked] = useState(false);
+
   return (
     <Checkbox
       checked={checked}
       label={task}
       onChange={(event) => setChecked(event.currentTarget.checked)}
+      style={{borderTop: "1px solid lightgrey", paddingTop: "10px", paddingBottom: "10px"}}
     />
   )
 }
