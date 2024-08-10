@@ -17,7 +17,7 @@ public class Task {
 
     private String description;
 
-    private boolean completed;
+    private boolean completed = false;
 
     private Date createdAt = new Date();
 
