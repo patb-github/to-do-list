@@ -22,12 +22,26 @@ function Todo({}: Props) {
   };
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      const tasks = await getAllTasks();
-      setTasks(tasks);
-    }
+    async function fetchTasks() {
+      try {
+        const tasks = await getAllTasks();
+
+        // If createdAt is a string, convert it to Date
+        const tasksWithDate = tasks.map(task => ({
+          ...task,
+          createdAt: new Date(task.createdAt) // Ensure createdAt is a Date object
+        }));
+
+        tasksWithDate.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        
+        setTasks(tasksWithDate);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
     fetchTasks();
-  }, [])
+  }, []);
 
   return (
     <Flex
