@@ -1,5 +1,8 @@
 package com.example.backend.task;
 
+
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +19,7 @@ public class Task {
 
     private boolean completed;
 
+    private Date createdAt = new Date();
 
     public String getId() {
         return id;
@@ -39,5 +43,13 @@ public class Task {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {  
+        this.createdAt = createdAt;
     }
 }
