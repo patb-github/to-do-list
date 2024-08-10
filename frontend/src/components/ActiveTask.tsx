@@ -14,11 +14,14 @@ function ActiveTask({task, setActiveTasks, setInactiveTasks}: Props) {
   const [checked, setChecked] = useState(false);
 
   async function markTaskAsCompleted(): Promise<void> {
-    const updatedTask: Task = await markTaskById(task.id);
-    console.log(updatedTask);
-    
-    setActiveTasks(prev => prev.filter(t => t.id !== updatedTask.id));
-    setInactiveTasks(prev => [updatedTask, ...prev]);
+    try {
+      const updatedTask: Task = await markTaskById(task.id);
+  
+      setActiveTasks(prev => prev.filter(t => t.id !== updatedTask.id));
+      setInactiveTasks(prev => [updatedTask, ...prev]);
+    } catch (error) {
+      console.error('Error marking task as completed:', error);
+    }
   }
 
   return (
