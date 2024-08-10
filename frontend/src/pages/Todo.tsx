@@ -39,7 +39,7 @@ function Todo({}: Props) {
       <Paper shadow="sm" radius="md" p="xl" style={paperStyle}>
         <Container>
         <h2>To Do List</h2>
-        <AddTask newTask={newTask} setNewTask={setNewTask}/>
+        <AddTask newTask={newTask} setNewTask={setNewTask} setTasks={setTasks}/>
         
         {/* To Do Tasks */}
         {tasks.map((task) => (

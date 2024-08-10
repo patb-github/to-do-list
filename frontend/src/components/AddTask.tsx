@@ -5,14 +5,16 @@ import { createTask } from '../api/tasksAPI';
 
 type Props = {
     newTask: string,
-    setNewTask: React.Dispatch<React.SetStateAction<string>>
+    setNewTask: React.Dispatch<React.SetStateAction<string>>,
+    setTasks: React.Dispatch<React.SetStateAction<Task[]>>,
 }
 
-function AddTask({newTask, setNewTask}: Props) {
+function AddTask({newTask, setNewTask, setTasks}: Props) {
 
-  function addTask(): void {
-    console.log("HELLO");
-    
+  async function addTask(): Promise<void> {
+    const createdTask: Task = await createTask(newTask);
+    setNewTask("");
+    setTasks(prev => [createdTask, ...prev]);
   }
   return (
     <Flex
