@@ -4,12 +4,15 @@ import AddTask from '../components/AddTask';
 import ActiveTask from '../components/ActiveTask';
 import { getAllTasks } from '../api/tasksAPI';
 import Task from '../types/Task';
+import InactiveTask from '../components/InactiveTask';
 
 type Props = {}
 
 function Todo({}: Props) {
   const [newTask, setNewTask] = useState<string>("");
-  const [tasks, setTasks] = useState<Task[]>([]);
+  // const [tasks, setTasks] = useState<Task[]>([]);
+  const [activeTasks, setActiveTasks] = useState<Task[]>([]);
+  const [inactiveTasks, setInactiveTasks] = useState<Task[]>([]);
 
   const paperStyle = {
     marginTop: "100px",
@@ -34,7 +37,9 @@ function Todo({}: Props) {
 
         tasksWithDate.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         
-        setTasks(tasksWithDate);
+        setActiveTasks(tasksWithDate.filter(task => !task.completed));
+        setInactiveTasks(tasksWithDate.filter(task => task.completed));
+        // setTasks(tasksWithDate);
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
@@ -53,17 +58,18 @@ function Todo({}: Props) {
       <Paper shadow="sm" radius="md" p="xl" style={paperStyle}>
         <Container>
         <h2>To Do List</h2>
-        <AddTask newTask={newTask} setNewTask={setNewTask} setTasks={setTasks}/>
+        <AddTask newTask={newTask} setNewTask={setNewTask} setActiveTasks={setActiveTasks}/>
         
         {/* To Do Tasks */}
-        {tasks.map((task) => (
-          <ActiveTask key={task.id} task={task.description} />
+        {activeTasks.map((task) => (
+          <ActiveTask key={task.id} task={task} setActiveTasks={setActiveTasks} setInactiveTasks={setInactiveTasks}/>
         ))}
         
         <h2>Completed</h2>
-        <div>
+        {inactiveTasks.map((task) => (
+          <InactiveTask key={task.id} task={task} setInactiveTasks={setInactiveTasks}/>
+        ))}
 
-        </div>
         </Container>
       </Paper>
     </Flex>

@@ -1,27 +1,21 @@
-import { Button, Flex, TextInput } from '@mantine/core';
-import React from 'react';
+import { useState } from 'react';
+import Task from '../types/Task';
+import { markTaskById } from '../api/tasksAPI';
+import trash from '../assets/trash.svg';
+
 type Props = {
-    task: string,
-    setNewTask: React.Dispatch<React.SetStateAction<string>>
+    task: Task,
+    setInactiveTasks: React.Dispatch<React.SetStateAction<Task[]>>,
 }
 
-function InactiveTask({task, settask}: Props) {
+function InactiveTask({task}: Props) {
+
+  
   return (
-    <Flex
-        mih={50}
-        gap="md"
-        justify="flex-start"
-        align="flex-start"
-        direction="row"
-        wrap="wrap"
-      >
-        <TextInput
-            value={task}
-            onChange={(event) => settask(event.currentTarget.value)}
-            placeholder='Add a task'
-        />
-        <Button variant="filled">Add</Button>
-    </Flex>
+    <div style={{borderTop: "1px solid lightgrey", paddingTop: "10px", paddingBottom: "10px", display: 'flex', alignItems: 'center'}}>
+      <img src={trash} alt="trash" style={{width: "20px", height: "20px", marginRight: "10px"}} />
+      <p style={{fontSize: "14px", margin: 0, textDecoration: "line-through"}}>{task.description}</p>
+    </div>
   )
 }
 

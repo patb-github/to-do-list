@@ -20,4 +20,12 @@ async function createTask(description: string): Promise<Task> {
     return task;
 }
 
-export { getAllTasks, createTask }
+async function markTaskById(id: string): Promise<Task> {
+    const response = await fetch(`${BASE_URL}${id}`, {
+        method: "PATCH"
+    })
+    const task = await response.json();
+    return task;
+}
+
+export { getAllTasks, createTask, markTaskById }
