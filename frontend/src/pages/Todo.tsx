@@ -1,12 +1,15 @@
 import { Paper, Container, Flex } from '@mantine/core';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddTask from '../components/AddTask';
 import ActiveTask from '../components/ActiveTask';
+import { getAllTasks } from '../api/tasksAPI';
+import Task from '../types/Task';
 
 type Props = {}
 
 function Todo({}: Props) {
   const [newTask, setNewTask] = useState<string>("");
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const paperStyle = {
     marginTop: "100px",
@@ -17,6 +20,14 @@ function Todo({}: Props) {
       minWidth: "800px",
     }
   };
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const tasks = await getAllTasks();
+      setTasks(tasks);
+    }
+    fetchTasks();
+  }, [])
 
   return (
     <Flex
@@ -31,7 +42,9 @@ function Todo({}: Props) {
         <AddTask newTask={newTask} setNewTask={setNewTask}/>
         
         {/* To Do Tasks */}
-        <ActiveTask task="Task 1"/>
+        {tasks.map((task) => (
+          <ActiveTask key={task.id} task={task.description} />
+        ))}
         
         <h2>Completed</h2>
         <div>
